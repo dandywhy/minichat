@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
 const formatMessage = require('./utils/messages')
+const { userJoin, getCurrentUser } = require('./utils/users')
 const app = express()
 const routes = require('./routes')
 const path = require('path')
@@ -30,12 +31,25 @@ app.use(express.static('public'))
 // }))
 
 io.on('connection', socket => {
-  // Welcome connected user
-  socket.broadcast.emit('chatMessage', 'hi')
+  socket.on('joinRoom', ({ username, room }) => {
+
+    userJoin(socket.id, username, room)
+    
+    socket.join(room)
+
+    socket.broadcast.to(room).emit('message', formatMessage(`${username} 已加入`))
+  })
+
   socket.on('disconnect', () => {
     io.emit('chatMessage', 'user disconnected')
   })
-  socket.on('chatMessage', msg => io.emit('chatMessage', msg))
+
+  // Listen for chatMessage
+  socket.on('chatMessage', msg => {
+    const { username, room } = getCurrentUser(socket.id)
+
+    io.to(room).emit('message', formatMessage(username, msg))
+  })
 })
 
 app.use(routes)

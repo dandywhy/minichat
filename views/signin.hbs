@@ -1,10 +1,25 @@
 <div class="signin-box">
   <div class="card card-body">
     <h1 class="text-center mt-3">MiniSocketChat</h1>
-    <form action="/">
+    <form action="/" class="needs-validation" novalidate>
       <div class="form-group mt-5">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" class="form-control" placeholder="ex : Simon" required>
+        <label for="user">Name</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="ex : Simon" required>
+        <div class="invalid-feedback">
+          Please enter your username.
+        </div>
+      </div>
+      <div class="form-group mt-5">
+        <label for="room">Room</label>
+        <select class="form-select" name="room" id="room" required>
+          <option selected disabled value="">Select</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <div class="invalid-feedback">
+            Please select a valid room.
+          </div>
+        </select>
+        {{!-- <input type="text" id="roomname" name="roomname" class="form-control" placeholder="ex : Moive" required> --}}
       </div>
       {{!-- <div class="form-group mt-3">
         <label for="password">Password</label>
@@ -21,4 +36,24 @@
 </div>
 
 
+<script>
+  (function () {
+  'use strict'
 
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
