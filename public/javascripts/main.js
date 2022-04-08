@@ -7,12 +7,12 @@ let input = document.getElementById('input')
 form.addEventListener('submit', e => {
   e.preventDefault()
   if (input.value) {
-    socket.emit('chat message', input.value)
+    socket.emit('chatMessage', input.value)
     input.value = ''
   }
 })
 
-socket.on('chat message', msg => {
+socket.on('chatMessage', msg => {
   let item = document.createElement('li')
   item.textContent = msg
   messages.appendChild(item)

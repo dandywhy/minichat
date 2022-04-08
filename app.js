@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
+const formatMessage = require('./utils/messages')
 const app = express()
 const routes = require('./routes')
 const path = require('path')
@@ -15,26 +16,26 @@ const PORT = 3000 || process.env.PORT
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-app.use(session({
-  secret: process.env.SECRET,
-  name: 'visitor',
-  saveUninitialized: false,
-  resave: false,
-  cookie: {
-    maxAge: 10 * 60 * 1000,
-    httpOnly: true
-  }
-}))
-
-app.get('/', (req, res) => res.render('index'))
+// app.use(session({
+//   secret: process.env.SECRET,
+//   name: 'visitor',
+//   saveUninitialized: false,
+//   resave: false,
+//   cookie: {
+//     maxAge: 10 * 60 * 1000,
+//     httpOnly: true
+//   }
+// }))
 
 io.on('connection', socket => {
-  socket.broadcast.emit('chat message', 'user connected')
+  // Welcome connected user
+  socket.broadcast.emit('chatMessage', 'hi')
   socket.on('disconnect', () => {
-    socket.broadcast.emit('chat message', 'user disconnected')
+    io.emit('chatMessage', 'user disconnected')
   })
-  socket.on('chat message', msg => io.emit('chat message', msg))
+  socket.on('chatMessage', msg => io.emit('chatMessage', msg))
 })
 
 app.use(routes)
