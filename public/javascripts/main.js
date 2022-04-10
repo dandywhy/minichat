@@ -8,7 +8,7 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true
 })
 
-socket.emit('joinRoom', { username, room })
+if (username && room) socket.emit('joinRoom', { username, room })
 
 // Message from server
 socket.on('message', msg => {

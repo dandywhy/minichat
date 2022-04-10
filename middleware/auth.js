@@ -1,9 +1,7 @@
-const authName = (req, res, next) => {
-  const { name } = req.body
-  if (name !== undefined) {
-    console.log(req.body)
-    next()
-  }
+const authUser = (req, res, next) => {
+  const { username, room } = req.query
+  if (username && room) return next()
+  res.redirect('/signin')
 }
 
-module.exports = { authName }
+module.exports = { authUser }

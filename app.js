@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
 const formatMessage = require('./utils/messages')
-const { userJoin, getCurrentUser } = require('./utils/users')
+const { userJoin, getCurrentUser, userLeave } = require('./utils/users')
 const app = express()
 const routes = require('./routes')
 const path = require('path')
@@ -40,15 +40,20 @@ io.on('connection', socket => {
     socket.broadcast.to(room).emit('message', formatMessage(`${username} 已加入`))
   })
 
-  socket.on('disconnect', () => {
-    io.emit('chatMessage', 'user disconnected')
-  })
-
   // Listen for chatMessage
   socket.on('chatMessage', msg => {
     const { username, room } = getCurrentUser(socket.id)
 
     io.to(room).emit('message', formatMessage(username, msg))
+  })
+
+  socket.on('disconnect', () => {
+    const user = userLeave(socket.id)
+
+    if (user) {
+      io.to(user.room).emit('message', formatMessage(`${user.username} 已離開`))
+    }
+
   })
 })
 
