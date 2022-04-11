@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const session = require('express-session')
 const formatMessage = require('./utils/messages')
 const { userJoin, getCurrentUser, userLeave } = require('./utils/users')
 const app = express()
@@ -23,16 +22,6 @@ app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-// app.use(session({
-//   secret: process.env.SECRET,
-//   name: 'visitor',
-//   saveUninitialized: false,
-//   resave: false,
-//   cookie: {
-//     maxAge: 10 * 60 * 1000,
-//     httpOnly: true
-//   }
-// }))
 
 io.on('connection', socket => {
   socket.on('joinRoom', ({ username, room }) => {
@@ -63,4 +52,4 @@ io.on('connection', socket => {
 
 app.use(routes)
 
-app.listen(PORT, () => console.log(`Socket.IO running on http://localhost:${PORT}`))
+server.listen(PORT, () => console.log(`Socket.IO running on http://localhost:${PORT}`))
