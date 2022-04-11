@@ -15,7 +15,7 @@ const io = new Server(server, {
   }
 })
 
-const PORT = 3000 || process.env.PORT
+const port = 3000 || process.env.PORT
 
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
@@ -52,4 +52,4 @@ io.on('connection', socket => {
 
 app.use(routes)
 
-server.listen(PORT, () => console.log(`Socket.IO running on http://localhost:${PORT}`))
+server.listen(port, () => console.log(`Socket.IO running on http://localhost:${port}`))
