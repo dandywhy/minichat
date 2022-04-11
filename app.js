@@ -63,4 +63,4 @@ io.on('connection', socket => {
 
 app.use(routes)
 
-server.listen(PORT, () => console.log(`Socket.IO running on http://localhost:${PORT}`))
+app.listen(PORT, () => console.log(`Socket.IO running on http://localhost:${PORT}`))
