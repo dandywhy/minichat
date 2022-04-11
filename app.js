@@ -15,7 +15,7 @@ const io = new Server(server, {
   }
 })
 
-const port = 3000 || process.env.PORT
+const port = process.env.PORT || 3000
 
 app.engine('hbs', engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
