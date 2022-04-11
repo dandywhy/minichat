@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900');
 * {
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -20,9 +20,13 @@ body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSyst
 #messages > li:nth-child(odd) { background: #efefef; }
 .message-form { word-break: break-word; }
 
-.signin-box { display: flex; margin: 7rem 0.5rem; justify-content: center;}
+.navbar-toggler { opacity: 0.5; }
+.navbar-toggler:hover { opacity: 1; transition: 0.8s; }
+
 .card { box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); max-width: 390px; min-height: 500px; }
 .form-group { z-index: 5; }
+
+.signin-box { display: flex; margin: 7rem 0.5rem; justify-content: center;}
 .signin-shape {
   width: 150px;
   height: 60px;

@@ -36,7 +36,7 @@ io.on('connection', socket => {
     userJoin(socket.id, username, room)
     
     socket.join(room)
-
+  
     socket.broadcast.to(room).emit('message', formatMessage(`${username} 已加入`))
   })
 
