@@ -6,7 +6,7 @@ router.get('/signin', (req, res) => {
   res.render('signin')
 })
 
-router.get('/', (req, res) => {
+router.get('/', authUser, (req, res) => {
   res.render('index')
 })
 
